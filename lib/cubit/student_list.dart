@@ -1,4 +1,5 @@
 import 'package:counter_app/cubit/add_student.dart';
+import 'package:counter_app/cubit/database/db_heleper.dart';
 import 'package:counter_app/cubit/student_cubit.dart';
 import 'package:counter_app/cubit/student_cubitState.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,12 @@ class StudentList extends StatefulWidget {
 class _StudentListState extends State<StudentList> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController rollNoController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<StudentCubit>().fetchSutdent();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +122,7 @@ class _StudentListState extends State<StudentList> {
                                 context.read<StudentCubit>().updateStudent(
                                       nameController.text,
                                       int.parse(rollNoController.text),
-                                      index,
+                                      student[DbHelper.ID],
                                     );
                                 Navigator.of(context).pop();
                               },
@@ -128,7 +135,8 @@ class _StudentListState extends State<StudentList> {
                       IconButton(
                         icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
-                          _showDeleteConfirmation(context, index);
+                          _showDeleteConfirmation(
+                              context, student[DbHelper.ID]);
                         },
                       ),
                     ],
