@@ -1,3 +1,5 @@
+import 'package:counter_app/bloc%20with%20Db/bloc/todo_bloc.dart';
+import 'package:counter_app/bloc%20with%20map/database/note_bloc/note_bloc.dart';
 import 'package:counter_app/cubit/student_cubit.dart';
 import 'package:counter_app/provider/counter_provider.dart';
 import 'package:counter_app/provider/empdata_provider.dart';
@@ -17,12 +19,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // ChangeNotifierProvider(
-        //   create: (context) => CounterProvider(),
-        // ),
-        // ChangeNotifierProvider(
-        //   create: (context) => EmpDataProvider(),
-        // ),
+        BlocProvider(create: (context) => TodoBloc()),
+        BlocProvider(create: (context) => NoteBloc()),
+        ChangeNotifierProvider(
+          create: (context) => CounterProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => EmpDataProvider(),
+        ),
         BlocProvider(create: (context) => StudentCubit())
       ],
       child: MaterialApp(
